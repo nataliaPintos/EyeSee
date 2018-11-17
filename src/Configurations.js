@@ -8,7 +8,7 @@ export default class Configurations extends Component {
     logout = async () => {
         var value = await AsyncStorage.getItem('user')
     
-        fetch('http://192.168.1.10:8000/api/user/logout',{
+        fetch('http://192.168.15.5:8000/api/user/logout',{
             method:'GET',
             headers: {
                 'Content-Type' : 'application/json',
