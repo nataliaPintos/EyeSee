@@ -144,8 +144,7 @@ getNoBlind = async () => {
 
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={[style.child, {backgroundColor: '#E8E8E8', flex: 0.3} ]} onPress={() =>
-                this.props.navigation.navigate('Camera')}>
+                <TouchableOpacity style={[style.child, {backgroundColor: '#E8E8E8', flex: 0.3} ]} >
                 
                     <Text style={{color: '#000', fontSize: 20}}> {this.state.showThisText.nome}</Text>
                     <Text style={{color: 'grey', fontSize: 16}}> Membro desde novembro de 2018</Text>
@@ -153,8 +152,7 @@ getNoBlind = async () => {
 
                 
                 </TouchableOpacity>
-                <TouchableOpacity style={[style.child, {backgroundColor: '#F0F0F0', flex: 0.2} ]} onPress={() =>
-                this.props.navigation.navigate('Camera')}>
+                <TouchableOpacity style={[style.child, {backgroundColor: '#F0F0F0', flex: 0.2} ]} >
                 
                     <Text style={{color: 'grey', fontSize: 15, padding: 10}}>Você receberá uma notificação quando alguém precisar de ajuda!</Text>
             
