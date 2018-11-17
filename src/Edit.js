@@ -6,32 +6,91 @@ import {
     View,
     Button, 
     StyleSheet, 
-    CheckBox   
+    CheckBox, 
+    AsyncStorage
 } from 'react-native';
 
 export default class Edit extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+            usuario:'',
+            nome:'',
+            sobrenome:'',
+            email:''
+          };
+    }
+    componentWillMount() {
+        this.getUser()
+    }
+
+    getUser = async () => {
+        var value = await AsyncStorage.getItem('usuario')
+        this.setState({usuario:JSON.parse(value)})
+    }
+
     render() {
+    
+
         return (
               <View style={styles.container}>
                 <View style= {{margin:10}}>
                     <Text 
                         style={{fontSize: 18}}>
-                    Seus dados cadastrais:
+                    Editar dados cadastrais:
                     </Text>
-                    <TextInput style= {styles.inputBox} placeholder='Username'/>
-                    <TextInput style= {styles.inputBox} placeholder='Email' />
+                    <TextInput style= {styles.inputBox} placeholder='Nome' defaultValue={this.state.usuario.nome}
+                     autoCapitalize="none"
+                     onChangeText={(nome) => this.setState({nome})}/>
+                    <TextInput style= {styles.inputBox} placeholder='Sobrenome' defaultValue={this.state.usuario.sobrenome}
+                     autoCapitalize="none"
+                     onChangeText={(sobrenome) => this.setState({sobrenome})}/>
+                    <TextInput style= {styles.inputBox} placeholder='Email' defaultValue={this.state.usuario.email}
+                      autoCapitalize="none"
+                      onChangeText={(email) => this.setState({email})}/>
                     <Button style= {styles.button} 
-                            onPress={this.props.onPress}
+                            onPress={this.save}
                             title="Salvar Alterações"
                             color='#00897b'
-                            onPress={() =>
-                            this.props.navigation.navigate('Configurations')
-                    } />
+                            />
                 </View>
              </View>
                  
             )
     }
+    save = async() => {
+
+        var value = await AsyncStorage.getItem('user')
+        if(this.state.nome===''){
+            this.state.nome = this.state.usuario.nome
+        }
+        if(this.state.email===''){
+            this.state.email = this.state.usuario.email
+        }
+        if(this.state.sobrenome===''){
+            this.state.sobrenome = this.state.usuario.sobrenome
+        }
+        fetch('http://192.168.1.10:8000/api/user',{
+            method: 'PUT', 
+            headers: {
+            
+                'Content-Type' : 'application/json',
+                'Accept' :'application/json',
+                'Authorization' : 'Bearer '+ value
+            },
+            body: JSON.stringify({
+                email:this.state.email,
+                nome:this.state.nome,
+                sobrenome:this.state.sobrenome,
+                password:'',
+            })
+        }).then((response) => response.json()).then((res) => {
+                alert(res.mensagem)
+                this.props.navigation.navigate('Configurations')
+            
+        }).done();
+
+        }
 }
 const styles = StyleSheet.create({
     container: {

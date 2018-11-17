@@ -25,14 +25,13 @@ export default class Login extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this._loadInitialState()
     }
 
     _loadInitialState = async () => {
         var value = await AsyncStorage.getItem('user')
         if( value != null){
-
             this.props.navigation.navigate('Secured')
         }
     }
@@ -41,44 +40,44 @@ export default class Login extends Component {
         return (
             <KeyboardAvoidingView behavior="padding" style= {styles.wrap}>
               <View style={styles.container}>
-				<Image  style={{width:500, height: 140}}
+				    <Image  style={{width:500, height: 140}}
           			source={require('../images/logo.png')}/>
-              <Text 
-                    style={{fontSize: 20, color: "#545654"}}>
-                    Bem-Vindo ao EyeSee!
-                </Text>
-                <View>
-                <TextInput style= {styles.inputBox} placeholder='Username' 
-                underlineColorAndroid='rgba(0,0,0,0)' 
-                selectionColor="#fff"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onSubmitEditing={()=> this.password.focus()}
-                onChangeText={(username) => this.setState({username})}/>
-                <TextInput secureTextEntry={true}
-                 onChangeText={(password) => this.setState({password})}
-                 style= {styles.inputBox} placeholder='Senha' autoCapitalize="none"/>
-                </View>
-                <View style={{margin:7}} />
-                <Button style= {styles.button} 
-                           onPress={
-                            this.login
-                          }
-                          title="Entrar"
-                          color='#00897b'
-                      />
-                <Text 
-                    style={{fontSize: 20, color: '#545654'}}>
-                    ou               
-                </Text>
-                  <TouchableOpacity onPress={() =>
-                            this.props.navigation.navigate('Register')
-                          }>
                     <Text 
-                        style={{fontSize: 23, color: '#00897b'}}>
-                        cadastre-se               
+                        style={{fontSize: 20, color: "#545654"}}>
+                        Bem-Vindo ao EyeSee!
                     </Text>
-                  </TouchableOpacity>
+                    <View>
+                    <TextInput style= {styles.inputBox} placeholder='Username' 
+                    underlineColorAndroid='rgba(0,0,0,0)' 
+                    selectionColor="#fff"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    onSubmitEditing={()=> this.password.focus()}
+                    onChangeText={(username) => this.setState({username})}/>
+                    <TextInput secureTextEntry={true}
+                    onChangeText={(password) => this.setState({password})}
+                    style= {styles.inputBox} placeholder='Senha' autoCapitalize="none"/>
+                    </View>
+                    <View style={{margin:7}} />
+                    <Button style= {styles.button} 
+                            onPress={
+                                this.login
+                            }
+                            title="Entrar"
+                            color='#00897b'
+                        />
+                    <Text 
+                        style={{fontSize: 20, color: '#545654'}}>
+                        ou               
+                    </Text>
+                    <TouchableOpacity onPress={() =>
+                                this.props.navigation.navigate('Register')
+                            }>
+                        <Text 
+                            style={{fontSize: 23, color: '#00897b'}}>
+                            cadastre-se               
+                        </Text>
+                    </TouchableOpacity>
                
               </View>
               </KeyboardAvoidingView>   
@@ -100,9 +99,6 @@ export default class Login extends Component {
                 scope:''
             })
         }).then((response) => response.json()).then((res) => {
-           // console.log(this.state.password)
-            console.log('json', res)
-           // alert(res.user)
             if(res.hasOwnProperty('error')){
                 alert(res.message)
             }
@@ -115,16 +111,6 @@ export default class Login extends Component {
         }
 }
 
-
-const SecondScreen = () => {
-    return(
-        <View style={styles.container}>
-            <Text style={styles.welcome}>
-                THIS IS THE SECOND SCREEN.
-            </Text>
-        </View>
-    );
-}
 const styles = StyleSheet.create({
     wrap:{
         flex:1

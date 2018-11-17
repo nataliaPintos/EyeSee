@@ -6,7 +6,8 @@ import {
     View,
     Button, 
     StyleSheet, 
-    CheckBox   
+    CheckBox,
+    KeyboardAvoidingView   
 } from 'react-native';
 
 export default class Register extends Component {
@@ -14,7 +15,12 @@ export default class Register extends Component {
         super();
 
         this.state= {
-            check: true
+            check: true,
+            nome:'',
+            sobrenome:'',
+            email:'',
+            password:'',
+            deficiente:''
         }
     }
     CheckBoxTest(){
@@ -23,11 +29,10 @@ export default class Register extends Component {
         });
     }
 
-    
-
     render() {
         return (
-              <View style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style= {styles.wrap}>
+            <View style={styles.container}>
 
                 <Image  
                     style={{width:500, height: 140}}
@@ -38,14 +43,19 @@ export default class Register extends Component {
                     Cadastre-se ao EyeSee: 
                 </Text>
                 <View>
-                    <TextInput style= {styles.inputBox} placeholder='Username' 
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        selectionColor="#fff"
-                        keyboardType="email-address"
-                        onSubmitEditing={()=> this.password.focus()}/>
-                    <TextInput style= {styles.inputBox} placeholder='Email' />
-                    <TextInput style= {styles.inputBox} secureTextEntry={true} placeholder='Senha' />
-                    <TextInput style= {styles.inputBox} secureTextEntry={true} placeholder='Confirmar Senha' />
+                <TextInput style= {styles.inputBox} placeholder='Nome'
+                      onChangeText={(nome) => this.setState({nome})}/>
+                    <TextInput style= {styles.inputBox} placeholder='Sobrenome' 
+                      onChangeText={(sobrenome) => this.setState({sobrenome})}/>
+                    <TextInput style= {styles.inputBox} placeholder='Email'
+                      keyboardType="email-address" 
+                      autoCapitalize="none"
+                      onChangeText={(email) => this.setState({email})}/>
+                    <TextInput style= {styles.inputBox} placeholder='Senha'
+                      secureTextEntry={true}
+                      autoCapitalize="none"
+                      onChangeText={(password) => this.setState({password})}/>
+                    <TextInput style= {styles.inputBox}   autoCapitalize="none" secureTextEntry={true} placeholder='Confirmar Senha' />
                  <View style={styles.checkBox}>
                  <CheckBox
                         title='Deficiente Visual'
@@ -58,18 +68,51 @@ export default class Register extends Component {
                 <View 
                     style={{margin:7}}/>
                     <Button style= {styles.button} 
-                            onPress={this.props.onPress}
+                            onPress={this.save}
                             title="Cadastrar"
                             color='#00897b'
-                            onPress={() =>
-            this.props.navigation.navigate('Secured')
-          } />
- </View>
+                           />
+              </View>
+            </KeyboardAvoidingView>
                  
             )
     }
+    save = async() => {
+        if(this.state.check===true){
+            this.state.deficiente='1'
+        }else{
+            this.state.deficiente='0'
+        }
+        fetch('http://192.168.1.10:8000/api/register',{
+            method: 'POST', 
+            headers: {
+            
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify({
+                email:this.state.email,
+                nome:this.state.nome,
+                sobrenome:this.state.sobrenome,
+                password:this.state.password,
+                deficiente: this.state.deficiente
+            })
+        }).then((response) => response.json()).then((res) => {
+           if(res.hasOwnProperty('error')){
+            alert(res.messagem)
+        }
+        else{
+            this.props.navigation.navigate('Login')
+        }
+        
+            
+        }).done();
+
+        }
 }
 const styles = StyleSheet.create({
+    wrap:{
+        flex:1
+    },
     container: {
       flex: 1,
       backgroundColor: '#ffff',

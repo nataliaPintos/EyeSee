@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
 import { Container, Content, Card, CardItem, Text, Icon } from 'native-base'
+import {
+    AsyncStorage
+} from 'react-native';
 export default class Configurations extends Component {
+  
+    logout = async () => {
+        var value = await AsyncStorage.getItem('user')
+    
+        fetch('http://192.168.1.10:8000/api/user/logout',{
+            method:'GET',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept' :'application/json',
+                'Authorization' : 'Bearer '+ value
+            }
+        }).then((response) => response.json()).then((res) => {
+           this.props.navigation.navigate('Login')
+        }).done();
+        
+    }
+
     render() {
         return (
             <Container>
@@ -10,15 +30,16 @@ export default class Configurations extends Component {
                             <Text>Sobre você</Text>
                         </CardItem>
                         <CardItem button onPress={() =>
-            this.props.navigation.navigate('Edit')}>              
+                            this.props.navigation.navigate('Edit')}>              
                             <Text>Dados pessoais</Text>
                         </CardItem>
                         <CardItem button>              
                             <Text onPress={() =>
-            this.props.navigation.navigate('Password')}>Alterar senha</Text>
+                            this.props.navigation.navigate('Password')}>Alterar senha</Text>
                         </CardItem >
-                        <CardItem button>              
-                            <Text>Alterar idioma</Text>
+                        <CardItem  button>              
+                            <Text onPress={() =>
+                            this.props.navigation.navigate('Languages')}>Alterar idioma</Text>
                         </CardItem >
                    </Card>
                     <Card>
@@ -47,8 +68,7 @@ export default class Configurations extends Component {
                         </CardItem>
                    </Card>
                    <Card>
-                    <CardItem button onPress={() =>
-            this.props.navigation.navigate('Login')}>                       
+                    <CardItem header button onPress={this.logout}>                       
                             <Text>Sair</Text>
                         </CardItem>
                    </Card>

@@ -15,6 +15,8 @@ import Edit from './src/Edit';
 import Password from './src/Password';
 import Secured2 from './src/Secured2';
 import KnowHow from './src/KnowHow';
+import Languages from './src/Languages';
+import Call from './src/Call';
  
 const TabScreenNavigator = createBottomTabNavigator({
   
@@ -22,14 +24,14 @@ const TabScreenNavigator = createBottomTabNavigator({
     navigationOptions:{
       tabBarLabel:'Menu',
       tabBarIcon:({tintcolor}) => (
-        <Ionicons name='ios-home' size={24} color="#000"/>
+        <Ionicons name='ios-home' size={24} color="#001c34"/>
       )  }} ,
       Configurations: {screen: Configurations,
         navigationOptions:{
           activeTintColor: '#000',
           tabBarLabel:'Configurações',
           tabBarIcon:({tintcolor}) => (
-            <Ionicons name='ios-settings' size={24} color="#000"/>
+            <Ionicons name='ios-settings' size={24} color="#001c34"/>
           )  }} ,
    
   
@@ -43,7 +45,9 @@ const MainScreenNavigator = createStackNavigator({
   Register: { screen: Register},
   Camera: { screen: CameraExample},
   Password: { screen: Password},
-  KnowHow: {screen: KnowHow}
+  KnowHow: {screen: KnowHow},
+  Languages: {screen: Languages},
+  Call: {screen: Call}
 },
 {
   navigationOptions: {

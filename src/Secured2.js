@@ -14,8 +14,6 @@ import { Ionicons, MaterialIcons , MaterialCommunityIcons, Feather
 
 import { Camera, Permissions } from 'expo';
 
-import { createBottomTabNavigator } from 'react-navigation';
-
 export default class Secured2 extends Component {
     state = {
     hasCameraPermission: null,
@@ -32,14 +30,12 @@ export default class Secured2 extends Component {
         return (
         <View style={[style.parent]}>
             <TouchableOpacity style={[style.child, {backgroundColor: '#086580'} ]} onPress={() =>
-            this.props.navigation.navigate('Camera')
-          }>
+            this.props.navigation.navigate('Camera')}>
                 <MaterialIcons name="video-call" size={80} color="white" />
                 <Text style={{color: 'white', fontSize: 35}}>Chamar voluntários</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[style.child, {backgroundColor: '#029c88'} ]} onPress={() =>
-            this.props.navigation.navigate('Camera')
-          }> 
+            this.props.navigation.navigate('Camera')}> 
                 <View >
                 <Ionicons name='md-qr-scanner' size={80} color="white"/>
                 </View>
