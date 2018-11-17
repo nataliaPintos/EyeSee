@@ -6,7 +6,8 @@ import {
     View,
     Button,
     Image,
-    Text
+    Text,
+    AsyncStorage
 } from 'react-native';
 
 import { FontAwesome, MaterialIcons , MaterialCommunityIcons, Feather
@@ -20,12 +21,42 @@ export default class Secured extends Component {
     state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
+    showThisText:''
   };
 
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
+    await this.getUser();
+   
   }
+
+   getUser = async () => {
+    var value = await AsyncStorage.getItem('user')
+
+    fetch('http://192.168.1.10:8000//api/user',{
+        method:'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Accept' :'application/json',
+            'Authorization' : 'Bearer '+ value
+        }
+    }).then((response) => response.json()).then((res) => {
+       // console.log(this.state.password)
+        console.log('json', res)
+       // alert(res.user)
+        if(res.hasOwnProperty('error')){
+            alert(res.message)
+        }
+        else{
+            console.log('chegou aqui')
+            AsyncStorage.setItem('info', JSON.stringify(res))
+            this.setState({showThisText:res})
+        }
+    }).done();
+
+    
+}
 
     //menu
     render() {
@@ -47,7 +78,7 @@ export default class Secured extends Component {
             this.props.navigation.navigate('Camera')
           }>
             
-                <Text style={{color: '#383838', fontSize: 20}}> Natália</Text>
+                <Text style={{color: 'gray', fontSize: 20}}> {this.state.showThisText.nome}</Text>
                 <Text style={{color: 'grey', fontSize: 16}}> Membro desde novembro de 2018</Text>
                 <Text style={{color: 'grey', fontSize: 16}}> Idioma: Português</Text>
 

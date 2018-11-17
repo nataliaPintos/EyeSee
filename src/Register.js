@@ -35,7 +35,7 @@ export default class Register extends Component {
                 />
                 <Text 
                     style={{fontSize: 20}}>
-                    Editar dados cadastrais: 
+                    Cadastre-se ao EyeSee: 
                 </Text>
                 <View>
                     <TextInput style= {styles.inputBox} placeholder='Username' 

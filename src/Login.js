@@ -8,8 +8,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     StatusBar,
-    SafeAreaView
-    
+    KeyboardAvoidingView,
+    AsyncStorage    
 } from 'react-native';
 
 import Register from './Register';
@@ -17,8 +17,29 @@ import Register from './Register';
 
 export default class Login extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state  ={
+            username:'',
+            password:''
+        }
+    }
+
+    componentDidMount() {
+        this._loadInitialState()
+    }
+
+    _loadInitialState = async () => {
+        var value = await AsyncStorage.getItem('user')
+        if( value != null){
+
+            this.props.navigation.navigate('Secured')
+        }
+    }
+
     render() {
         return (
+            <KeyboardAvoidingView behavior="padding" style= {styles.wrap}>
               <View style={styles.container}>
 				<Image  style={{width:500, height: 140}}
           			source={require('../images/logo.png')}/>
@@ -30,14 +51,18 @@ export default class Login extends Component {
                 <TextInput style= {styles.inputBox} placeholder='Username' 
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 selectionColor="#fff"
+                autoCapitalize="none"
                 keyboardType="email-address"
-                onSubmitEditing={()=> this.password.focus()}/>
-                <TextInput secureTextEntry={true} style= {styles.inputBox} placeholder='Senha' />
+                onSubmitEditing={()=> this.password.focus()}
+                onChangeText={(username) => this.setState({username})}/>
+                <TextInput secureTextEntry={true}
+                 onChangeText={(password) => this.setState({password})}
+                 style= {styles.inputBox} placeholder='Senha' autoCapitalize="none"/>
                 </View>
                 <View style={{margin:7}} />
                 <Button style= {styles.button} 
-                           onPress={() =>
-                            this.props.navigation.navigate('Secured')
+                           onPress={
+                            this.login
                           }
                           title="Entrar"
                           color='#00897b'
@@ -56,10 +81,40 @@ export default class Login extends Component {
                   </TouchableOpacity>
                
               </View>
-                 
+              </KeyboardAvoidingView>   
             )
     }
+    login = () => {
+        fetch('http://192.168.1.10:8000/oauth/token',{
+            method: 'POST', 
+            headers: {
+            
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                grant_type:'password',
+                client_id: 2,
+                client_secret: 'wtiCwiIXfMdPYxo7ri70SZY1roRKtAaio7ssU00j',
+                username:this.state.username,
+                password:this.state.password,
+                scope:''
+            })
+        }).then((response) => response.json()).then((res) => {
+           // console.log(this.state.password)
+            console.log('json', res)
+           // alert(res.user)
+            if(res.hasOwnProperty('error')){
+                alert(res.message)
+            }
+            else{
+                AsyncStorage.setItem('user', res.access_token)
+                this.props.navigation.navigate('Secured')
+            }
+        }).done();
+
+        }
 }
+
 
 const SecondScreen = () => {
     return(
@@ -71,6 +126,9 @@ const SecondScreen = () => {
     );
 }
 const styles = StyleSheet.create({
+    wrap:{
+        flex:1
+    },
     container: {
       flex: 1,
       backgroundColor: '#ffff',

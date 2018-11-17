@@ -47,10 +47,7 @@ export default class Secured2 extends Component {
                 <Text style={{color: 'white', fontSize: 35}}>Abrir scanner</Text>
                 </View>
             </TouchableOpacity>
-            </View>
-        
-             
-              )
+            </View>)
                
     }
 }

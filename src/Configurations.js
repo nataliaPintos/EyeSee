@@ -48,8 +48,7 @@ export default class Configurations extends Component {
                    </Card>
                    <Card>
                     <CardItem button onPress={() =>
-            this.props.navigation.navigate('Login')}> 
-                    <Icon name="logout" style={{ color: '#C83083' }} />                       
+            this.props.navigation.navigate('Login')}>                       
                             <Text>Sair</Text>
                         </CardItem>
                    </Card>

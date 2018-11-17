@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createBottomTabNavigator, TabNavigator, StackNavigator, createStackNavigator} from 'react-navigation';
+import { createBottomTabNavigator, TabNavigator, createSwitchNavigator, createStackNavigator} from 'react-navigation';
 import {
   AppRegistry
 } from 'react-native';
@@ -35,6 +35,7 @@ const TabScreenNavigator = createBottomTabNavigator({
   
 });
 
+
 const MainScreenNavigator = createStackNavigator({
   Login: { screen: Login },
   Edit: { screen: Edit },
@@ -53,6 +54,10 @@ const MainScreenNavigator = createStackNavigator({
   },
 });
 
+const CREATE = createSwitchNavigator({
+  MainScreenNavigator: { screen: MainScreenNavigator },
+  Tab: { screen: TabScreenNavigator },
+})
 export default MainScreenNavigator;
 
 
