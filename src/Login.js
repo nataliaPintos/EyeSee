@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 
 import Register from './Register';
-
+import { BASE_API_URL, BASE_URL } from './config/url';
+import { OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRECT } from './config/oauth_settings';
 
 export default class Login extends Component {
 
@@ -85,7 +86,7 @@ export default class Login extends Component {
     }
 
     login = () => {
-        fetch('http://192.168.15.5:8000/oauth/token', {
+        fetch(BASE_URL+'/oauth/token', {
             method: 'POST',
             headers: {
 
@@ -93,8 +94,8 @@ export default class Login extends Component {
             },
             body: JSON.stringify({
                 grant_type: 'password',
-                client_id: 2,
-                client_secret: 'sUDm7xqB3hDTnxSxVSOcckaWhlBWaUdlhxRtqVQt',
+                client_id: OAUTH_CLIENT_ID,
+                client_secret: OAUTH_CLIENT_SECRECT,
                 username: this.state.username,
                 password: this.state.password,
                 scope: ''

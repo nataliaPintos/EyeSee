@@ -10,6 +10,8 @@ import {
     AsyncStorage
 } from 'react-native';
 
+import {BASE_API_URL} from './config/url';
+
 export default class Edit extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ export default class Edit extends Component {
             usuario: '',
             nome: '',
             sobrenome: '',
-            email: ''
+            email: '',
         };
     }
 
@@ -26,12 +28,11 @@ export default class Edit extends Component {
     }
 
     getUser = async () => {
-        var value = await AsyncStorage.getItem('usuario')
-        this.setState({usuario: JSON.parse(value)})
-    }
+        var value = await AsyncStorage.getItem('usuario');
+        this.setState({usuario: JSON.parse(value)});
+    };
 
     render() {
-
 
         return (
             <View style={styles.container}>
@@ -63,7 +64,7 @@ export default class Edit extends Component {
 
     save = async () => {
 
-        var value = await AsyncStorage.getItem('user')
+        var value = await AsyncStorage.getItem('user');
         if (this.state.nome === '') {
             this.state.nome = this.state.usuario.nome
         }
@@ -73,7 +74,7 @@ export default class Edit extends Component {
         if (this.state.sobrenome === '') {
             this.state.sobrenome = this.state.usuario.sobrenome
         }
-        fetch('http://192.168.15.5:8000/api/user', {
+        fetch(BASE_API_URL+'/user', {
             method: 'PUT',
             headers: {
 
@@ -90,7 +91,6 @@ export default class Edit extends Component {
         }).then((response) => response.json()).then((res) => {
             alert(res.mensagem);
             this.props.navigation.navigate('Configurations');
-            this.getUser();
         }).done();
 
     }

@@ -10,6 +10,8 @@ import {
     AsyncStorage
 } from 'react-native';
 
+import {BASE_API_URL} from './config/url';
+
 export default class Password extends Component {
     constructor(props) {
         super(props);
@@ -82,7 +84,7 @@ export default class Password extends Component {
     async update() {
         var value = await AsyncStorage.getItem('user')
 
-        fetch('http://192.168.15.5:8000/api/user', {
+        fetch(BASE_API_URL+'/user', {
             method: 'PUT',
             headers: {
 
@@ -97,8 +99,8 @@ export default class Password extends Component {
                 password: this.state.password,
             })
         }).then((response) => response.json()).then((res) => {
-            console.log(res)
-            alert(res.mensagem)
+            console.log(res);
+            alert(res.mensagem);
             this.props.navigation.navigate('Configurations')
 
         }).done();

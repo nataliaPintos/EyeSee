@@ -2,3 +2,5 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 /.idea
+src/config/url.js
+src/config/oauth_settings.js

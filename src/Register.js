@@ -10,6 +10,8 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 
+import {BASE_API_URL, BASE_URL} from './config/url';
+
 export default class Register extends Component {
     constructor() {
         super();
@@ -86,7 +88,7 @@ export default class Register extends Component {
         } else {
             this.state.deficiente = '0'
         }
-        fetch('http://192.168.15.5:8000/api/register', {
+        fetch(BASE_API_URL+'/register', {
             method: 'POST',
             headers: {
 

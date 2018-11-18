@@ -65,4 +65,4 @@ const style = StyleSheet.create({
         justifyContent: "center",
         elevation: 5
     },
-})
+});

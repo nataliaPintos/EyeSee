@@ -18,6 +18,7 @@ import {Camera, Permissions} from 'expo';
 
 import {createBottomTabNavigator} from 'react-navigation';
 import Secured2 from './Secured2';
+import {BASE_API_URL} from "./config/url";
 
 export default class Secured extends Component {
     state = {
@@ -39,7 +40,7 @@ export default class Secured extends Component {
     getUser = async () => {
         var value = await AsyncStorage.getItem('user')
 
-        fetch('http://192.168.15.5:8000/api/user', {
+        fetch(BASE_API_URL + '/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -48,25 +49,25 @@ export default class Secured extends Component {
             }
         }).then((response) => response.json()).then((res) => {
             // console.log(this.state.password)
-            console.log('json', res)
+            console.log('json', res);
             // alert(res.user)
             if (res.hasOwnProperty('error')) {
                 alert(res.message)
             }
             else {
-                console.log('chegou aqui')
-                AsyncStorage.setItem('usuario', JSON.stringify(res))
-                this.setState({showThisText: res})
+                console.log('chegou aqui');
+                AsyncStorage.setItem('usuario', JSON.stringify(res));
+                this.setState({showThisText: res});
             }
         }).done();
 
 
-    }
+    };
 
     getNoBlind = async () => {
-        var value = await AsyncStorage.getItem('user')
+        var value = await AsyncStorage.getItem('user');
 
-        fetch('http://192.168.15.5:8000/api/user/noblind/all', {
+        fetch(BASE_API_URL + '/user/noblind/all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ export default class Secured extends Component {
             }
         }).done();
 
-        fetch('http://192.168.15.5:8000/api/user/blind/all', {
+        fetch(BASE_API_URL + '/user/blind/all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,4 +207,4 @@ const style = StyleSheet.create({
             width: 1
         }
     },
-})
+});
