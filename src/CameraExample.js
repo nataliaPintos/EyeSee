@@ -61,39 +61,22 @@ export default class CameraExample extends React.Component {
                     )
             }
         }
-        var a = "world";
-        setTimeout(callback(a), 5000);
-        a = "Stack Overflow";
-        /*
         const options = { base64: true};
         this.camera.takePictureAsync({options})
             .then((data) => {
 
-             //   const actions = [resize={width: 640, height:480 }]
+               alert(data);
 
-              //  const saveOptions = {base64:true}
-
-                console.log(data)
-
-            
-              
-                setTimeout(alert("TEXTO MENSAGEM"), 10000)
-                     //   let filteredResult = filterLabelsList(result.responses[0], 0.3);
-                      //  displayResult(filteredResult);
-
-                })
+            })
             
             .catch(err => console.error(err));
-            */
+            
     } 
     
 }
 
 // API call to google cloud
 async function checkForLabels(base64) {
-    console.log("URLLLLLLLLLL", config.googleCloud.api)
-    console.log("TOKENNNNNNN", config.googleCloud.apiKey)
-
     return await
         fetch(config.googleCloud.api + config.googleCloud.apiKey, {
             method: 'POST',
