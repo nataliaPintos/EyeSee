@@ -3,8 +3,7 @@
 
 # Overview
 
-EyeSee is an open source mobile app developed in partnership with [Antonio](http://github.com/paduanton/)
-and it is written in React Native. This project is the frontend app only. The backend REST API is developed in Laravel Framework and can be found here:
+EyeSee is an open source mobile app developed by [Antonio](http://github.com/paduanton/) and [Natália](http://github.com/nataliaPintos). It is written in React Native and this project is the frontend app only. The backend REST API is developed in Laravel Framework and can be found here:
 
 [EyeSee Backend (REST API)](https://github.com/paduanton/EyeSee-API)
 
@@ -37,17 +36,20 @@ Start the development server (changes will now update live in the smartphone if 
 
 To view the application, go to: [http://localhost:19002/](http://localhost:19002) and scan the QR Code.
 
-## UI Preview
+## UI Preview of the main screens
 
-**Login and signup**
-![](...)
+**Login and Signup**
+![](https://github.com/paduanton/EyeSee/blob/master/images/login_signup.png?raw=true)
 
 **Home Screen**
-visually impaired | volunteer
-![](...)
+
+Volunteer | Visually impaired
+
+![](https://github.com/paduanton/EyeSee/blob/master/images/home.png?raw=true)
 
 **Text reader**
-![](...)
+
+![](https://github.com/paduanton/EyeSee/blob/master/images/text.png?raw=true)
 
 
 ## Links
@@ -55,3 +57,4 @@ visually impaired | volunteer
 <!-- - [API Docs](http://vataxia.net/) -->
 - [Backend (GitHub)](https://github.com/paduanton/EyeSee-API)
 - [Antonio (Github)](https://github.com/paduanton)
+- [Natália (Github)](https://github.com/nataliaPintos)
